@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="毎日の習慣、達成率、連続達成日数を端末内で管理する習慣トラッカー" />
+  <title>習慣トラッカー</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="page-header">
+      <div>
+        <p class="badge">HABIT TRACKER</p>
+        <h1>習慣トラッカー</h1>
+        <p class="description">毎日の習慣を記録し、今月の達成率と連続達成日数を確認できます。</p>
+      </div>
+      <a class="home-link" href="https://kentaro0810.github.io/">リンク集へ戻る</a>
+    </header>
+
+    <section class="summary-grid" aria-label="今月のまとめ">
+      <article class="summary-card main-summary">
+        <p>今日の達成</p>
+        <strong id="todaySummary">0 / 0</strong>
+        <span id="todayMessage">習慣を登録しましょう</span>
+      </article>
+      <article class="summary-card">
+        <p>今月の達成率</p>
+        <strong id="monthlyRate">0%</strong>
+        <span>今日までの記録から計算</span>
+      </article>
+      <article class="summary-card">
+        <p>最長の連続記録</p>
+        <strong id="bestStreak">0日</strong>
+        <span id="bestStreakName">まだ記録がありません</span>
+      </article>
+    </section>
+
+    <section class="control-card">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">TODAY</p>
+          <h2 id="todayHeading">今日の習慣</h2>
+        </div>
+        <button id="openAddButton" class="primary-button" type="button">＋ 習慣を追加</button>
+      </div>
+
+      <div id="habitList" class="habit-list"></div>
+      <div id="emptyState" class="empty-state">
+        <span aria-hidden="true">🌱</span>
+        <h3>最初の習慣を登録しましょう</h3>
+        <p>「勉強」「読書」「運動」など、毎日続けたい行動を追加できます。</p>
+      </div>
+    </section>
+
+    <section class="history-card">
+      <div class="section-heading history-heading">
+        <div>
+          <p class="section-kicker">7 DAYS</p>
+          <h2>直近7日間</h2>
+        </div>
+        <p class="small-note">チェックした日の記録を端末内に保存します</p>
+      </div>
+      <div id="weekGrid" class="week-grid" aria-label="直近7日間の達成状況"></div>
+    </section>
+
+    <section class="data-card">
+      <h2>データ管理</h2>
+      <p>機種変更やブラウザーデータ削除に備え、JSONファイルでバックアップできます。</p>
+      <div class="data-actions">
+        <button id="exportButton" class="secondary-button" type="button">バックアップを書き出す</button>
+        <label class="secondary-button file-label" for="importInput">バックアップを読み込む</label>
+        <input id="importInput" type="file" accept="application/json,.json" hidden />
+        <button id="resetAllButton" class="danger-button" type="button">全データを削除</button>
+      </div>
+      <p id="statusMessage" class="status-message" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <dialog id="habitDialog" class="habit-dialog">
+    <form id="habitForm" method="dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="section-kicker">HABIT SETTINGS</p>
+          <h2 id="dialogTitle">習慣を追加</h2>
+        </div>
+        <button id="closeDialogButton" class="icon-button" type="button" aria-label="閉じる">×</button>
+      </div>
+
+      <input id="habitId" type="hidden" />
+      <label for="habitName">習慣名</label>
+      <input id="habitName" type="text" maxlength="30" placeholder="例：英語を30分勉強する" required />
+
+      <fieldset>
+        <legend>テーマカラー</legend>
+        <div class="color-options">
+          <label><input type="radio" name="habitColor" value="#2563eb" checked /><span style="--swatch:#2563eb"></span>青</label>
+          <label><input type="radio" name="habitColor" value="#16a34a" /><span style="--swatch:#16a34a"></span>緑</label>
+          <label><input type="radio" name="habitColor" value="#7c3aed" /><span style="--swatch:#7c3aed"></span>紫</label>
+          <label><input type="radio" name="habitColor" value="#ea580c" /><span style="--swatch:#ea580c"></span>橙</label>
+          <label><input type="radio" name="habitColor" value="#db2777" /><span style="--swatch:#db2777"></span>桃</label>
+        </div>
+      </fieldset>
+
+      <div class="dialog-actions">
+        <button id="cancelButton" class="secondary-button" type="button">キャンセル</button>
+        <button class="primary-button" type="submit">保存する</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
